@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>th.co.geniustree.springdata.jpa</groupId>
 	<artifactId>specification-with-projections</artifactId>
-	<version>3.2.2</version>
+	<version>3.5.0</version>
 	<packaging>jar</packaging>
 	<name>specification-projection</name>
 	<description>Support specification with projection for Spring Data JPA</description>
@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.2.2</version>
+		<version>3.5.0</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<!-- -->

@@ -3,6 +3,13 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<!-- -->
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.5.0</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+	<!-- -->
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>th.co.geniustree.springdata.jpa</groupId>
 	<artifactId>specification-with-projections</artifactId>
@@ -12,13 +19,6 @@
 	<description>Support specification with projection for Spring Data JPA</description>
 	<url>https://github.com/pramoth/specification-with-projection</url>
 	<!-- -->
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.5.0</version>
-		<relativePath /> <!-- lookup parent from repository -->
-	</parent>
-	<!-- -->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -26,8 +26,6 @@
 		<java.version>17</java.version>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
-		<!-- -->
-		<hibernate.version>7.3.1.Final</hibernate.version>
 	</properties>
 	<!-- -->
 	<licenses>
@@ -83,11 +81,11 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
+		<!--dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 			<scope>provided</scope>
-		</dependency>
+		</dependency-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -114,6 +112,20 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.hibernate.orm</groupId>
+							<artifactId>hibernate-jpamodelgen</artifactId>
+						</path>
+					</annotationProcessorPaths>
+					<testAnnotationProcessorPaths>
+						<path>
+							<groupId>org.hibernate.orm</groupId>
+							<artifactId>hibernate-jpamodelgen</artifactId>
+						</path>
+					</testAnnotationProcessorPaths>
+				</configuration>
 			</plugin>
 		</plugins>
 		<!-- GCP -->
@@ -134,6 +146,23 @@
 			</activation>
 			<build>
 				<plugins>
+					<plugin>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<configuration>
+							<annotationProcessorPaths>
+								<path>
+									<groupId>org.hibernate.orm</groupId>
+									<artifactId>hibernate-jpamodelgen</artifactId>
+								</path>
+							</annotationProcessorPaths>
+							<testAnnotationProcessorPaths>
+								<path>
+									<groupId>org.hibernate.orm</groupId>
+									<artifactId>hibernate-jpamodelgen</artifactId>
+								</path>
+							</testAnnotationProcessorPaths>
+						</configuration>
+					</plugin>
 					<plugin>
 						<artifactId>maven-release-plugin</artifactId>
 						<version>2.5.3</version>

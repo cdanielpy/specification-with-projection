@@ -1,7 +1,5 @@
 package org.springframework.data.repository.query;
 
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import org.springframework.core.CollectionFactory;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.converter.Converter;
@@ -51,12 +49,21 @@ public class MyResultProcessor {
         }
         return (T) converter.convert(source);
     }
-    @RequiredArgsConstructor(staticName = "of")
     private static class ChainingConverter implements Converter<Object, Object> {
 
-        private final @NonNull
-        Class<?> targetType;
-        private final @NonNull Converter<Object, Object> delegate;
+        private final Class<?> targetType;
+        private final Converter<Object, Object> delegate;
+
+        private ChainingConverter(Class<?> targetType, Converter<Object, Object> delegate) {
+            Assert.notNull(targetType, "Target type must not be null!");
+            Assert.notNull(delegate, "Delegate converter must not be null!");
+            this.targetType = targetType;
+            this.delegate = delegate;
+        }
+
+        public static ChainingConverter of(Class<?> targetType, Converter<Object, Object> delegate) {
+            return new ChainingConverter(targetType, delegate);
+        }
 
         /**
          * Returns a new {@link ChainingConverter} that hands the elements resulting from the current conversion to the
@@ -98,12 +105,11 @@ public class MyResultProcessor {
     }
 
 
-    @RequiredArgsConstructor
     private static class ProjectingConverter implements Converter<Object, Object> {
 
-        private final @NonNull ReturnedType type;
-        private final @NonNull ProjectionFactory factory;
-        private final @NonNull ConversionService conversionService;
+        private final ReturnedType type;
+        private final ProjectionFactory factory;
+        private final ConversionService conversionService;
 
         /**
          * Creates a new {@link ProjectingConverter} for the given {@link ReturnedType} and {@link ProjectionFactory}.
@@ -113,6 +119,15 @@ public class MyResultProcessor {
          */
         ProjectingConverter(ReturnedType type, ProjectionFactory factory) {
             this(type, factory, DefaultConversionService.getSharedInstance());
+        }
+
+        ProjectingConverter(ReturnedType type, ProjectionFactory factory, ConversionService conversionService) {
+            Assert.notNull(type, "ReturnedType must not be null!");
+            Assert.notNull(factory, "ProjectionFactory must not be null!");
+            Assert.notNull(conversionService, "ConversionService must not be null!");
+            this.type = type;
+            this.factory = factory;
+            this.conversionService = conversionService;
         }
 
         /**
